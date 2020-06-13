@@ -22,5 +22,6 @@ module.exports = {
     'consistent-return': 'off',
     'new-cap': 'off',
     'func-names': 'off',
+    'strict': 'off',
   },
 };

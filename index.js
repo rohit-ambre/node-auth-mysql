@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+const db = require('./src/models');
+
 // Modules
 const logger = require('./winston-config');
 
@@ -29,6 +31,13 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-app.listen(process.env.NODE_PORT, () => {
-  logger.info(`server started on port ${process.env.NODE_PORT}`);
-});
+db.sequelize
+  .sync()
+  .then(() => {
+    app.listen(process.env.NODE_PORT, () => {
+      logger.info(`server started on port ${process.env.NODE_PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err);
+  });
