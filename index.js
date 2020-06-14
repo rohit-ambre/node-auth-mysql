@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 
 const db = require('./src/models');
+const routes = require('./src/routes');
 
 // Modules
 const logger = require('./winston-config');
@@ -34,6 +35,10 @@ if (process.env.NODE_ENV !== 'production') {
 db.sequelize
   .sync()
   .then(() => {
+    logger.info('We are connected to the database');
+
+    app.use('/api', routes);
+
     app.listen(process.env.NODE_PORT, () => {
       logger.info(`server started on port ${process.env.NODE_PORT}`);
     });
