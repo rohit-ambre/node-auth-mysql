@@ -1,4 +1,5 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/powered-by-electricity.svg)](https://forthebadge.com)
 
 # node-auth-mysql
 ____
@@ -11,4 +12,7 @@ It can be used in the start of any project to have JWT authentication.
 1. clone the repo
 2. run ```npm install```
 3. create ```.env``` file as given in ```.env.example```
-4. run ```npm run dev```
+4. enter your database configs in ```.env``` at least for development in local.
+5. run ```sequelize db:create``` It will create database for you.
+6. run ```sequelize db:migrate``` It will create tables.
+7. run ```npm run dev```
