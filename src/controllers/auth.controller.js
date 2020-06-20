@@ -1,9 +1,9 @@
-const bcrypt = require('bcrypt');
-const JWT = require('jsonwebtoken');
-const { body, validationResult } = require('express-validator');
+// const bcrypt = require('bcrypt');
+// const JWT = require('jsonwebtoken');
+const { body, validationResult } = require('express-validator')
 
-const logger = require('../../winston-config');
-const db = require('../models');
+const logger = require('../../winston-config')
+const db = require('../models')
 
 exports.validateRules = (method) => {
   switch (method) {
@@ -20,8 +20,8 @@ exports.validateRules = (method) => {
           .exists()
           .withMessage('password does not exist')
           .isLength({ min: 5 })
-          .withMessage('must be at least 5 chars long'),
-      ];
+          .withMessage('must be at least 5 chars long')
+      ]
     }
     case 'login': {
       return [
@@ -30,12 +30,12 @@ exports.validateRules = (method) => {
           .withMessage('email does not exist')
           .isEmail()
           .withMessage('Invalid email'),
-        body('password').exists().withMessage('password does not exist'),
-      ];
+        body('password').exists().withMessage('password does not exist')
+      ]
     }
     default:
   }
-};
+}
 
 /**
  * Creates new User in table if not already exists
@@ -44,48 +44,48 @@ exports.validateRules = (method) => {
 module.exports.SignUp = (req, res) => {
   db.user.findOneUser(req.body.email, (err, data) => {
     if (err) {
-      logger.error(`DB Error: ${err.message}`);
+      logger.error(`DB Error: ${err.message}`)
       res.status(500).json({
         status: false,
         message: 'some error occured',
-        error: err,
-      });
+        error: err
+      })
     }
     if (data) {
       res.status(200).json({
         status: false,
-        message: 'User already exist',
-      });
+        message: 'User already exist'
+      })
     } else {
       db.user
         .create(req.body)
         .then((newUser) => {
-          res.status(201).json({ status: true, newUser });
+          res.status(201).json({ status: true, newUser })
         })
         .catch((er) => {
-          logger.error(`DB Error: ${er.message}`);
+          logger.error(`DB Error: ${er.message}`)
           return res.status(500).json({
             status: false,
             message: 'error creating new User',
-            error: er,
-          });
-        });
+            error: er
+          })
+        })
     }
-  });
-};
+  })
+}
 
 module.exports.validate = (req, res, next) => {
-  const errors = validationResult(req);
+  const errors = validationResult(req)
   if (errors.isEmpty()) {
-    return next();
+    return next()
   }
-  const extractedErrors = [];
-  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
+  const extractedErrors = []
+  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }))
 
-  logger.warn(`Validation Error on: '${req.url}'`);
+  logger.warn(`Validation Error on: '${req.url}'`)
   return res.status(422).json({
     status: false,
     message: 'Validation errors',
-    error: extractedErrors,
-  });
-};
+    error: extractedErrors
+  })
+}
