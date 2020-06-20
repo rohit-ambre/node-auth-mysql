@@ -115,6 +115,23 @@ module.exports.login = (req, res) => {
   })
 }
 
+module.exports.getAllUsers = (req, res) => {
+  db.user.findAll({
+    attributes: { exclude: ['password'] }
+  })
+    .then(users => {
+      res.status(200).json({ status: true, data: users })
+    })
+    .catch(err => {
+      logger.error(`DB Error: ${err.message}`)
+      res.status(500).json({
+        status: false,
+        message: 'some error occured',
+        error: err
+      })
+    })
+}
+
 module.exports.validate = (req, res, next) => {
   const errors = validationResult(req)
   if (errors.isEmpty()) {
