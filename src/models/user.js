@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt')
+
 const logger = require('../../winston-config')
 
 module.exports = (sequelize, DataTypes) => {
@@ -25,6 +27,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     }
+  })
+
+  /**
+   * beforeCreate hook on User instance to hash the password
+   */
+  User.addHook('beforeCreate', async (user, options) => {
+    const salt = await bcrypt.genSalt(parseInt(process.env.SALT))
+    user.password = await bcrypt.hash(user.password, salt)
   })
 
   /**

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
-    "lint": "npx standard --fix . && echo 'Lint complete.'"
+    "lint": "npx standard --fix && echo 'Lint complete.'"
   },
   "author": "Rohit Ambre",
   "license": "ISC",
