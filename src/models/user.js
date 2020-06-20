@@ -38,6 +38,13 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   /**
+   * User instanceMethod to Validate the password
+   */
+  User.prototype.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.password)
+  }
+
+  /**
    * Checks whether user with same unique fiels already exist or not
    * @returns User object on success and null if not found
    */
