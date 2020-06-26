@@ -11,6 +11,10 @@ const logger = require('./winston-config')
 
 require('dotenv').config()
 
+let port = process.env.NODE_PORT
+if (isNaN(parseInt(port))) {
+  port = 3000
+}
 // create express app
 const app = express()
 
@@ -38,8 +42,8 @@ db.sequelize.sync()
 
     app.use('/api', routes)
 
-    app.listen(process.env.NODE_PORT, () => {
-      logger.info(`server started on port ${process.env.NODE_PORT}`)
+    app.listen(port, () => {
+      logger.info(`server started on port ${port}`)
     })
   })
   .catch((err) => {

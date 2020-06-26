@@ -6,7 +6,7 @@ const db = require('../models')
 
 exports.validateRules = (method) => {
   switch (method) {
-    case 'SignUp': {
+    case 'signup': {
       return [
         body('email')
           .exists()
@@ -40,7 +40,7 @@ exports.validateRules = (method) => {
  * Creates new User in table if not already exists
  * @returns User object on success and error if already found
  */
-module.exports.SignUp = (req, res) => {
+module.exports.signup = (req, res) => {
   db.user.findOneUser(req.body.email, (err, data) => {
     if (err) {
       logger.error(`DB Error: ${err.message}`)
