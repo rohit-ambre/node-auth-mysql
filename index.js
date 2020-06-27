@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
 const morgan = require('morgan')
+const path = require('path')
 
 const db = require('./src/models')
 const routes = require('./src/routes')
@@ -41,6 +42,14 @@ db.sequelize.sync()
     logger.info('We are connected to the database')
 
     app.use('/api', routes)
+
+    app.use('/', (req, res) => {
+      res.send('<h3 style="text-align:center">This is a Boilerplate Express application with authentication with mysql Database</h3>')
+    })
+
+    app.use('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '/not_found.html'))
+    })
 
     app.listen(port, () => {
       logger.info(`server started on port ${port}`)
