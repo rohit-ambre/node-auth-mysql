@@ -1,4 +1,5 @@
 const JWT = require('jsonwebtoken')
+const { validationResult } = require('express-validator')
 const logger = require('../winston-config')
 
 module.exports.ValidateJWT = (req, res, next) => {
@@ -17,5 +18,21 @@ module.exports.ValidateJWT = (req, res, next) => {
     }
     req.decoded = decoded
     next()
+  })
+}
+
+module.exports.validate = (req, res, next) => {
+  const errors = validationResult(req)
+  if (errors.isEmpty()) {
+    return next()
+  }
+  const extractedErrors = []
+  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }))
+
+  logger.warn(`Validation Error on: '${req.url}'`)
+  return res.status(422).json({
+    status: false,
+    message: 'Validation errors',
+    error: extractedErrors
   })
 }
