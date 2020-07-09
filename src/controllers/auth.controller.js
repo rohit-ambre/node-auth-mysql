@@ -73,6 +73,32 @@ module.exports.signup = (req, res) => {
   })
 }
 
+/**
+ * @swagger
+ *
+ * /api/auth/login:
+ *   post:
+ *     description: Login to the application
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: user
+ *         description: Login user.
+ *         schema:
+ *           type: object
+ *           required:
+ *             - email
+ *             - password
+ *           properties:
+ *             email:
+ *               type: string
+ *             password:
+ *               type: string
+ *     responses:
+ *       200:
+ *         description: login
+ */
 module.exports.login = (req, res) => {
   db.user.findOneUser(req.body.email, (err, user) => {
     if (err) {
