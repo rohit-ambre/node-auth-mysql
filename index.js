@@ -51,8 +51,15 @@ db.sequelize.sync()
       res.sendFile(path.join(__dirname, '/not_found.html'))
     })
 
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
       logger.info(`server started on port ${port}`)
+    })
+
+    process.on('SIGINT', () => {
+      logger.warn('SIGINT RECEIVED. Shutting down gracefully')
+      server.close(() => {
+        logger.info('💥 Process terminated!')
+      })
     })
   })
   .catch((err) => {
