@@ -37,8 +37,42 @@ exports.validateRules = (method) => {
 }
 
 /**
- * Creates new User in table if not already exists
- * @returns User object on success and error if already found
+ *  @swagger
+ *  paths:
+ *    /api/auth/signup:
+ *      post:
+ *        description: signup in the application
+ *        tags:
+ *          - User
+ *        requestBody:
+ *          required: true
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  email:
+ *                    type: string
+ *                  password:
+ *                    type: string
+ *                  first_name:
+ *                    type: string
+ *                  last_name:
+ *                    type: string
+ *        responses:
+ *          201:
+ *            description: Signup successful
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    status:
+ *                      type: boolean
+ *                    newUser:
+ *                      type: object
+ *          422:
+ *            description: validation error
  */
 module.exports.signup = (req, res) => {
   db.user.findOneUser(req.body.email, (err, data) => {
@@ -73,6 +107,47 @@ module.exports.signup = (req, res) => {
   })
 }
 
+/**
+ * @swagger
+ *
+ *  paths:
+ *    /api/auth/login:
+ *      post:
+ *        description: Login to the application
+ *        tags:
+ *          - Auth  
+ *        requestBody:
+ *          required: true
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  email:
+ *                    type: string
+ *                  password:
+ *                    type: string
+ *        responses:
+ *          200:
+ *            description: login successful
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    status:
+ *                      type: boolean
+ *                    message:
+ *                      type: string
+ *                    access_token:
+ *                      type: string
+ *                    expiresIn:
+ *                      type: integer
+ *          401:
+ *            description: Unauthorised
+ *          422:
+ *            description: validation error     
+ */
 module.exports.login = (req, res) => {
   db.user.findOneUser(req.body.email, (err, user) => {
     if (err) {

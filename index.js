@@ -3,7 +3,10 @@ const bodyParser = require('body-parser')
 const helmet = require('helmet')
 const morgan = require('morgan')
 const path = require('path')
+const swaggerJSDoc = require('swagger-jsdoc')
+const swaggerUI = require('swagger-ui-express')
 
+const { swaggerDocument, swaggerOptions } = require("./swagger.config");
 const db = require('./src/models')
 const routes = require('./src/routes')
 
@@ -36,6 +39,13 @@ if (process.env.NODE_ENV !== 'production') {
     })
   )
 }
+
+const swaggerDocs = swaggerJSDoc(swaggerDocument);
+app.use(
+  "/api-docs",
+  swaggerUI.serve,
+  swaggerUI.setup(swaggerDocs, swaggerOptions)
+);
 
 db.sequelize.sync()
   .then(() => {
