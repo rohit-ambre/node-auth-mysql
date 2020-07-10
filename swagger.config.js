@@ -6,6 +6,8 @@ module.exports.swaggerDocument = {
       version: '1.0.0', // Version (required)
     },
   },
+  host: "localhost:3000",
+  basepath: "/api",
   servers: ["http://localhost:3000"],
   // Path to the API docs
   apis: ['./src/controllers/**/*.js']
