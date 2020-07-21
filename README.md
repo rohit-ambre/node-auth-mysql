@@ -14,6 +14,6 @@ It can be used in the start of any project to have JWT authentication.
 2. run ```npm install```
 3. create ```.env``` file as given in ```.env.example```
 4. enter your database configs in ```.env``` at least for development in local.
-5. run ```sequelize db:create``` It will create database for you.
-6. run ```sequelize db:migrate``` It will create tables.
+5. run ```npx sequelize db:create``` It will create database for you.
+6. run ```npx sequelize db:migrate``` It will create tables.
 7. run ```npm run dev```
