@@ -73,5 +73,5 @@ db.sequelize.sync()
     })
   })
   .catch((err) => {
-    console.error('Unable to connect to the database:', err)
+    console.error(`Unable to connect to the database:' ${err.stack}`)
   })
