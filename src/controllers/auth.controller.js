@@ -115,7 +115,7 @@ module.exports.signup = (req, res) => {
  *      post:
  *        description: Login to the application
  *        tags:
- *          - Auth  
+ *          - Auth
  *        requestBody:
  *          required: true
  *          content:
@@ -146,7 +146,7 @@ module.exports.signup = (req, res) => {
  *          401:
  *            description: Unauthorised
  *          422:
- *            description: validation error     
+ *            description: validation error
  */
 module.exports.login = (req, res) => {
   db.user.findOneUser(req.body.email, (err, user) => {
