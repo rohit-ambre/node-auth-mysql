@@ -50,28 +50,29 @@ app.use(
 db.sequelize.sync()
   .then(() => {
     logger.info('We are connected to the database')
-
-    app.use('/api', routes)
-
-    app.use('/', (req, res) => {
-      res.send('<h3 style="text-align:center">This is a Boilerplate Express application with authentication with mysql Database</h3>')
-    })
-
-    app.use('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '/not_found.html'))
-    })
-
-    const server = app.listen(port, () => {
-      logger.info(`server started on port ${port}`)
-    })
-
-    process.on('SIGINT', () => {
-      logger.warn('SIGINT RECEIVED. Shutting down gracefully')
-      server.close(() => {
-        logger.info('💥 Process terminated!')
-      })
-    })
   })
   .catch((err) => {
     console.error(`Unable to connect to the database:' ${err.stack}`)
+    throw new Error(`Unable to connect to the database:' ${err.message}`)
   })
+
+app.use('/api', routes)
+
+app.use('/', (req, res) => {
+  res.send('<h3 style="text-align:center">This is a Boilerplate Express application with authentication with mysql Database</h3>')
+})
+
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/not_found.html'))
+})
+
+const server = app.listen(port, () => {
+  logger.info(`server started on port ${port}`)
+})
+
+process.on('SIGINT', () => {
+  logger.warn('SIGINT RECEIVED. Shutting down gracefully')
+  server.close(() => {
+    logger.info('💥 Process terminated!')
+  })
+})
