@@ -58,13 +58,22 @@ db.sequelize.sync()
 
 app.use('/api', routes)
 
-app.use('/', (req, res) => {
-  res.send('<h3 style="text-align:center">This is a Boilerplate Express application with authentication with mysql Database</h3>')
-})
+app.use((req, res, next) => {
+  const error = new Error('Not found')
+  error.status = 404
+  next(error)
+});
 
-app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/not_found.html'))
-})
+// error handler middleware
+app.use((error, req, res, next) => {
+  logger.error(`Error occured: ${error}`)
+  res.status(error.status || 500).send({
+    error: {
+      status: error.status || 500,
+      message: error.message || 'Internal Server Error',
+    },
+  });
+});
 
 const server = app.listen(port, () => {
   logger.info(`server started on port ${port}`)
