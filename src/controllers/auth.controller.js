@@ -162,7 +162,7 @@ module.exports.login = (req, res) => {
       const match = user.validPassword(req.body.password)
 
       if (match) {
-        const expiry = 60 * 60 // JWT expiry duration
+        const expiry = '15m' // JWT expiry duration
         const token = JWT.sign(
           { data: user.id },
           process.env.JWT_SECRET,
