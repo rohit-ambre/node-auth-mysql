@@ -52,7 +52,7 @@ db.sequelize.sync()
     logger.info('We are connected to the database')
   })
   .catch((err) => {
-    console.error(`Unable to connect to the database:' ${err.stack}`)
+    logger.error(`Unable to connect to the database:' ${err.message}`)
     throw new Error(`Unable to connect to the database:' ${err.message}`)
   })
 
