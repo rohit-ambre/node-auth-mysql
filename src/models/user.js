@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   /**
-   * Checks whether user with same unique fiels already exist or not
+   * Checks whether user with same unique field already exist or not
    * @returns User object on success and null if not found
    */
   User.findOneUser = function (email, cb) {
