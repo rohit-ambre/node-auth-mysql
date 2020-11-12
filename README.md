@@ -16,3 +16,12 @@ It can be used in the start of any project to have JWT authentication.
 5. run ```npx sequelize db:create``` It will create database for you.
 6. run ```npx sequelize db:migrate``` It will create tables.
 7. run ```npm run dev```
+
+### Boilerplate includes
+
+- [x] Server with Express.js
+- [x] Database schema and models using Sequelize ORM.
+- [x] User authentication with JWT.
+- [x] StandardJs for coding standards and styling.
+- [x] Request validation using Express-validator.
+- [x] Winston for server side logging.
