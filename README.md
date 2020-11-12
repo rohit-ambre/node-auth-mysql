@@ -24,4 +24,5 @@ It can be used in the start of any project to have JWT authentication.
 - [x] User authentication with JWT.
 - [x] StandardJs for coding standards and styling.
 - [x] Request validation using Express-validator.
-- [x] Winston for server side logging.
+- [x] Morgan and Winston for server side logging.
+- [x] Swagger for API documentation.
