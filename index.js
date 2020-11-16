@@ -1,8 +1,6 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const helmet = require('helmet')
 const morgan = require('morgan')
-const path = require('path')
 const swaggerJSDoc = require('swagger-jsdoc')
 const swaggerUI = require('swagger-ui-express')
 
@@ -23,8 +21,8 @@ if (isNaN(parseInt(port))) {
 const app = express()
 
 // Middlewares
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(helmet())
 
 if (process.env.NODE_ENV !== 'production') {
