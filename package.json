@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.20",
     "sequelize-cli": "^5.5.1",
     "standard": "^14.3.4"
   }
